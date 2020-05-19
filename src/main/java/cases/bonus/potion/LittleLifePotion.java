@@ -5,9 +5,14 @@ import warriors.characters.Characters;
 
 public class LittleLifePotion implements Cases{
 	
-	private int addPv = 1;
+	private String name;
+	private int addPv;
 	
-
+	public LittleLifePotion() {
+		this.name = "LittlePotion";
+		this.addPv =1;
+	}
+	
 	@Override
 	public void event(Characters hero) {
 		hero.addPvToHero(addPv);

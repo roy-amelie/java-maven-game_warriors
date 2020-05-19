@@ -7,7 +7,13 @@ import warriors.characters.Warrior;
 
 public class Arc implements Cases{
 
-	private int addPA=1;
+	private String name;
+	private int addPA;
+
+	public Arc() {
+		this.name = "Arc";
+		this.addPA = 1;
+	}
 
 	@Override
 	public void event(Characters hero) {

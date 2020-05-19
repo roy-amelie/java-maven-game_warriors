@@ -6,7 +6,13 @@ import warriors.characters.Warrior;
 
 public class Epee implements Cases{
 
-	private int addPA=5;
+	private String name;
+	private int addPA;
+	
+	public Epee() {
+		this.name = "Epee";
+		this.addPA = 5;
+	}
 
 	@Override
 	public void event(Characters hero) {

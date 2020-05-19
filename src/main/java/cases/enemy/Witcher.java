@@ -5,8 +5,15 @@ import warriors.characters.Characters;
 
 public class Witcher implements Cases {
 
-	private int pv=9;
-	private int pa=2;
+	private String name;
+	private int pv;
+	private int pa;
+	
+	public Witcher() {
+		this.name = "Witcher";
+		this.pv = 9;
+		this.pa = 2;
+	}
 
 	@Override
 	public void event(Characters hero) {

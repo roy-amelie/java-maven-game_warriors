@@ -6,9 +6,15 @@ import warriors.characters.Wizard;
 
 public class Flash implements Cases{
 
-	private int addPA=2;
+	private String name;
+	private int addPA;
 	
 
+	public Flash() {
+		this.name = "Flash";
+		this.addPA =2;
+	}
+	
 	@Override
 	public void event(Characters hero) {
 		// TODO Auto-generated method stub

@@ -6,8 +6,13 @@ import warriors.characters.Characters;
 
 public class LifePotion implements Cases {
 
-	private int addPv = 2;
+	private String name;
+	private int addPv;
 
+	public LifePotion() {
+		this.name = "MiddlePotion";
+		this.addPv =2;
+	}
 	
 	@Override
 	public void event(Characters hero) {

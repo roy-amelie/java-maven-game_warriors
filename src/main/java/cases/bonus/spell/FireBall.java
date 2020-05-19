@@ -6,7 +6,13 @@ import warriors.characters.Wizard;
 
 public class FireBall implements Cases{
 
-	private int addPA=7;
+	private String name;
+	private int addPA;
+	
+	public FireBall() {
+		this.name = "FireBall";
+		this.addPA =7;
+	}
 	
 	@Override
 	public void event(Characters hero) {

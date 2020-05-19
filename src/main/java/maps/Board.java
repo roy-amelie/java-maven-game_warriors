@@ -19,15 +19,17 @@ import cases.enemy.Goblin;
 import cases.enemy.Witcher;
 import warriors.contracts.Map;
 
-public class LaForetDesSecrets implements Map{
+public class Board implements Map{
 	
-	private String name ="La foret des secrets";
+	private String name ;
 	private int numberOfCase = 64;
 	private List<Cases> map = new ArrayList<Cases>();
 	
-	public LaForetDesSecrets() {
+	
+	
+	public Board() {
 		// TODO Auto-generated constructor stub
-		this.getName();
+		this.name="La foret des secrets";
 		this.getNumberOfCase();
 		
 		fillTheMap();

@@ -5,9 +5,15 @@ import warriors.characters.Characters;
 
 public class Goblin implements Cases{
 
-	private int pv=6;
-	private int pa=1;
+	private String name;
+	private int pv;
+	private int pa;
 	
+	public Goblin() {
+		this.name = "Goblin";
+		this.pv = 6;
+		this.pa = 1;
+	}
 
 	@Override
 	public void event(Characters hero) {

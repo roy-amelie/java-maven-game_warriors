@@ -6,9 +6,16 @@ import warriors.characters.Characters;
 
 public class Dragon implements Cases {
 
-	private int pv=15;
-	private int pa=4;
+	private String name;
+	private int pv;
+	private int pa;
 	
+	public Dragon() {
+		this.name = "Dragon";
+		this.pv = 15;
+		this.pa = 4;
+	}
+
 	@Override
 	public void event(Characters hero) {
 		// TODO Auto-generated method stub

@@ -1,17 +1,27 @@
 package warriors.engine;
 
 
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.Reader;
+import java.io.Writer;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
+import cases.CaseDeserializer;
 import cases.Cases;
 import dice.Dice;
 import dice.DiceClassic;
 import dice.DiceDebug;
 import game.Game;
-import maps.LaForetDesSecrets;
+import maps.Board;
+import maps.JsonMapCreator;
 import warriors.characters.Warrior;
 import warriors.characters.Wizard;
 import warriors.contracts.GameState;
@@ -26,22 +36,25 @@ public class Warriors implements WarriorsAPI {
 	List <Hero> warriorList= new ArrayList<Hero>();
 	List <Map> mapList = new ArrayList<Map>();
 	public static java.util.Map<String, Game> gameList = new HashMap<>();
+	public String pathToFile="src/main/java/maps/map.json";
 
 	public Warriors(String pathToFileDebug) {
 		warriorList.add(new Warrior());
 		warriorList.add(new Wizard());
 
-		
-		mapList.add(new LaForetDesSecrets());
-		
+		mapList.add(new Board());
+			
 		dice= new DiceDebug(pathToFileDebug);
 	}
 	
 	public Warriors() {
 		warriorList.add(new Warrior());
 		warriorList.add(new Wizard());
-
-		mapList.add(new LaForetDesSecrets());
+		
+		
+		
+		mapList.add(new Board());
+		mapList.add(new JsonMapCreator().createInstance(getClass()));
 		
 		dice= new DiceClassic();
 	}
@@ -72,7 +85,7 @@ public class Warriors implements WarriorsAPI {
 		Game game = gameList.get(gameID);
 		/*========= recuperation de la map================*/
 		Map map = mapList.get(0);
-		List<Cases> caseList = ((LaForetDesSecrets) map).getMap();
+		List<Cases> caseList = ((Board) map).getMap();
 		/*==============random de========================*/
 		int nextdice = dice.next();
 		/*==============modification de la case du joueur========================*/

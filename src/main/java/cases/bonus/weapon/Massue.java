@@ -7,8 +7,13 @@ import warriors.characters.Warrior;
 
 public class Massue implements Cases{
 
-	private int addPA=3;
+	private String name;
+	private int addPA;
 	
+	public Massue() {
+		this.name = "Massue";
+		this.addPA = 3;
+	}
 	@Override
 	public void event(Characters hero) {
 		// TODO Auto-generated method stub
