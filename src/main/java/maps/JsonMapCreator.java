@@ -39,7 +39,7 @@ public class JsonMapCreator implements InstanceCreator<Map>{
 		JsonReader jsonreader= new JsonReader(reader);
 		
 		Board board = gson.fromJson(jsonreader, Board.class);
-		System.out.println(gson);
+	
 		
 	
 		return board;
