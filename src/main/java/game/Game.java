@@ -15,17 +15,43 @@ public class Game implements GameState{
 	private String playerName;
 	private String gameId = "game_"+ Warriors.gameList.size() ;
 	private GameStatus gameStatus = GameStatus.IN_PROGRESS;
-	private Hero hero;
+	private Characters hero;
 	private Map map;
 	private String lastLog;
 	private int currentCase;
+	private int heroId;
+	private int mapId;
+	private int id;
 
-	public Game(String playerName,Hero hero,Map map) {
+	public Game(String playerName,Characters hero,Map map) {
 		this.playerName = playerName;
 		this.hero = hero;
+		this.getHeroId();
 		this.map = map;
+		this.mapId=1;
 		this.getGameId();
 		this.getGameStatus();
+		this.currentCase=0;
+		this.lastLog="la partie commence";
+		
+	}
+	
+	public Game(int id,String gameId,String playerName,int heroId,int MapId, String lastLog, int currentCase) {
+		this.id=id;
+		this.gameId=gameId;
+		this.playerName = playerName;
+		this.heroId=heroId;
+		this.mapId=1;
+		this.currentCase=0;
+		this.lastLog=lastLog;
+	}
+	
+	public Game(String gameId,String playerName,String gameStatus,int heroId,int MapId, String lastLog, int currentCase) {
+		this.gameId=gameId;
+		this.playerName = playerName;
+		this.heroId=heroId;
+		this.mapId=1;
+		this.gameStatus=GameStatus.IN_PROGRESS;
 		this.currentCase=0;
 		this.lastLog="la partie commence";
 	}
@@ -53,7 +79,7 @@ public class Game implements GameState{
 	}
 
 	@Override
-	public Hero getHero() {
+	public Characters getHero() {
 		// TODO Auto-generated method stub
 		return hero;
 	}
@@ -90,6 +116,27 @@ public class Game implements GameState{
 		return (Characters)hero;
 	}
 
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public int getHeroId() {
+		heroId=getHero().getId();
+		return heroId;
+	}
+
+	public int getMapId() {
+		return mapId;
+	}
+
+	public void setMapId(int mapId) {
+		this.mapId = mapId;
+	}
+
 	public String moveHero(int dice, List<Cases> caseList) {
 		// TODO Auto-generated method stub
 		String action;
@@ -103,7 +150,8 @@ public class Game implements GameState{
 				setGameStatus(GameStatus.GAME_OVER);
 				action = "vous êtes mort ";
 			}else {
-				action=String.format( "Vous avez fait un lancé de %d \nVous etes sur la case n°%d\nil y a %s\nil vous reste %d pv\nvous avez %d pa",dice,getCurrentCase(),caseList.get(getCurrentCase()).toString(),getChar().getLife(),getChar().getAttackLevel());
+				action=String.format( "Vous avez fait un lancé de %d \nVous etes sur la case n°%d\nil y a %s\nil vous reste %d pv\nvous avez %d pa"
+						,dice,getCurrentCase(),caseList.get(getCurrentCase()).toString(),getChar().getLife(),getChar().getAttackLevel());
 			}
 		}
 		return action;

@@ -24,7 +24,7 @@ public class Board implements Map{
 	private String name ;
 	private int numberOfCase = 64;
 	private List<Cases> map = new ArrayList<Cases>();
-	
+	private int id =1;
 	
 	
 	public Board() {
@@ -54,6 +54,14 @@ public class Board implements Map{
 		return numberOfCase;
 	}
 	
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
 	public void fillTheMap() {
 		/*============ enemy================*/
 		addTypeCase(4, new Dragon());

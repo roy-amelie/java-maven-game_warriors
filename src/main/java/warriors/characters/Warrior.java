@@ -7,7 +7,8 @@ public class Warrior extends Characters {
 	private String image= "https://i.pinimg.com/originals/29/f0/31/29f031dcc97eb956bdab6884e49263d2.jpg" ;
 	private int life= 10;
 	private int attackLevel=5;
-
+	private int id = 1;
+	
 	public Warrior() {
 		this.getName();
 		this.getImage();
@@ -16,6 +17,16 @@ public class Warrior extends Characters {
 	}
 
 	
+	public int getId() {
+		return id;
+	}
+
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+
 	@Override
 	public String getName() {
 		// TODO Auto-generated method stub

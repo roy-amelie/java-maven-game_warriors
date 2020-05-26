@@ -14,6 +14,8 @@ import java.util.List;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import DAO.GameStateDAO;
+import DAO.JDBC.ConnectBDD;
 import cases.CaseDeserializer;
 import cases.Cases;
 import dice.Dice;
@@ -22,6 +24,7 @@ import dice.DiceDebug;
 import game.Game;
 import maps.Board;
 import maps.JsonMapCreator;
+import warriors.characters.Characters;
 import warriors.characters.Warrior;
 import warriors.characters.Wizard;
 import warriors.contracts.GameState;
@@ -74,7 +77,8 @@ public class Warriors implements WarriorsAPI {
 	@Override
 	public GameState createGame(String playerName, Hero hero, Map map) {
 		// TODO Auto-generated method stub
-		Game game = new Game(playerName, hero, map);
+		Game game = new Game(playerName, (Characters) hero, map);
+		boolean idResult= new GameStateDAO(ConnectBDD.getInstance()).create(game);
 		gameList.put(game.getGameId(),game);
 		return game;
 	}
@@ -92,7 +96,8 @@ public class Warriors implements WarriorsAPI {
 		String action =game.moveHero(nextdice,caseList);
 
 		game.setLastLog(action);
-
+		boolean saveResult= new GameStateDAO(ConnectBDD.getInstance()).update(game);
+		System.out.println(saveResult);
 		return game;
 	}
 

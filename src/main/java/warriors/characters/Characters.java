@@ -5,6 +5,15 @@ import warriors.contracts.Hero;
 public class Characters implements Hero{
 	protected int life;
 	protected int attackLevel;
+	protected int id;
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
 
 	@Override
 	public String getName() {
