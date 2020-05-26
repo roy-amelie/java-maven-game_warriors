@@ -20,6 +20,8 @@ public class Game implements GameState{
 	private String lastLog;
 	private int currentCase;
 	private int heroId;
+	private int heroPv;
+	private int heroPa;
 	private int mapId;
 	private int id;
 
@@ -27,6 +29,8 @@ public class Game implements GameState{
 		this.playerName = playerName;
 		this.hero = hero;
 		this.getHeroId();
+		this.heroPv=10;
+		this.heroPa=5;
 		this.map = map;
 		this.mapId=1;
 		this.getGameId();
@@ -36,7 +40,7 @@ public class Game implements GameState{
 		
 	}
 	
-	public Game(int id,String gameId,String playerName,int heroId,int MapId, String lastLog, int currentCase) {
+	public Game(int id,String gameId,String playerName,int heroId,int MapId, String lastLog, int currentCase,int heroPa,int heroPv) {
 		this.id=id;
 		this.gameId=gameId;
 		this.playerName = playerName;
@@ -44,6 +48,8 @@ public class Game implements GameState{
 		this.mapId=1;
 		this.currentCase=0;
 		this.lastLog=lastLog;
+		this.heroPa=heroPa;
+		this.heroPv=heroPv;
 	}
 	
 	public Game(String gameId,String playerName,String gameStatus,int heroId,int MapId, String lastLog, int currentCase) {
@@ -137,6 +143,22 @@ public class Game implements GameState{
 		this.mapId = mapId;
 	}
 
+	public int getHeroPv() {
+		return heroPv;
+	}
+
+	public void setHeroPv(int heroPv) {
+		this.heroPv = getChar().getLife();
+	}
+
+	public int getHeroPa() {
+		return heroPa;
+	}
+
+	public void setHeroPa(int heroPa) {
+		this.heroPa = getChar().getAttackLevel();
+	}
+
 	public String moveHero(int dice, List<Cases> caseList) {
 		// TODO Auto-generated method stub
 		String action;
@@ -147,9 +169,12 @@ public class Game implements GameState{
 			setCurrentCase(dice);
 			caseList.get(getCurrentCase()).event(getChar());;
 			if(getChar().getLife()<=0) {
+				this.heroPv=0;
 				setGameStatus(GameStatus.GAME_OVER);
 				action = "vous êtes mort ";
 			}else {
+				this.heroPv=getChar().getLife();
+				this.heroPa=getChar().getAttackLevel();
 				action=String.format( "Vous avez fait un lancé de %d \nVous etes sur la case n°%d\nil y a %s\nil vous reste %d pv\nvous avez %d pa"
 						,dice,getCurrentCase(),caseList.get(getCurrentCase()).toString(),getChar().getLife(),getChar().getAttackLevel());
 			}

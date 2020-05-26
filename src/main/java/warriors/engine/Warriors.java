@@ -1,22 +1,13 @@
 package warriors.engine;
 
 
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.Reader;
-import java.io.Writer;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-
 import DAO.GameStateDAO;
+import DAO.HeroDAO;
 import DAO.JDBC.ConnectBDD;
-import cases.CaseDeserializer;
 import cases.Cases;
 import dice.Dice;
 import dice.DiceClassic;
@@ -25,8 +16,6 @@ import game.Game;
 import maps.Board;
 import maps.JsonMapCreator;
 import warriors.characters.Characters;
-import warriors.characters.Warrior;
-import warriors.characters.Wizard;
 import warriors.contracts.GameState;
 import warriors.contracts.Hero;
 import warriors.contracts.Map;
@@ -36,14 +25,14 @@ import warriors.contracts.WarriorsAPI;
 public class Warriors implements WarriorsAPI {	
 
 	Dice dice;
-	List <Hero> warriorList= new ArrayList<Hero>();
+	List <Characters> warriorList= new ArrayList<Characters>();
 	List <Map> mapList = new ArrayList<Map>();
 	public static java.util.Map<String, Game> gameList = new HashMap<>();
 	public String pathToFile="src/main/java/maps/map.json";
 
 	public Warriors(String pathToFileDebug) {
-		warriorList.add(new Warrior());
-		warriorList.add(new Wizard());
+		HeroDAO heroDao= new HeroDAO(ConnectBDD.getInstance());
+		warriorList= heroDao.findAll();
 
 		mapList.add(new Board());
 			
@@ -51,11 +40,9 @@ public class Warriors implements WarriorsAPI {
 	}
 	
 	public Warriors() {
-		warriorList.add(new Warrior());
-		warriorList.add(new Wizard());
-		
-		
-		
+		HeroDAO heroDao= new HeroDAO(ConnectBDD.getInstance());
+		warriorList= heroDao.findAll();
+			
 		mapList.add(new Board());
 		mapList.add(new JsonMapCreator().createInstance(getClass()));
 		

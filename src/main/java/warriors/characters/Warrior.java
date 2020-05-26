@@ -7,16 +7,19 @@ public class Warrior extends Characters {
 	private String image= "https://i.pinimg.com/originals/29/f0/31/29f031dcc97eb956bdab6884e49263d2.jpg" ;
 	private int life= 10;
 	private int attackLevel=5;
-	private int id = 1;
+	private int id;
+	private String type="warrior";
+	private String equipement="";
 	
-	public Warrior() {
-		this.getName();
-		this.getImage();
-		this.getLife();
-		this.getAttackLevel();
+	
+	public Warrior(int id, String type, String name, String Image, int life, int force, String equipement) {
+		super(id, type, name, Image, life, force, equipement);
 	}
 
+
 	
+
+
 	public int getId() {
 		return id;
 	}
@@ -54,8 +57,28 @@ public class Warrior extends Characters {
 		return attackLevel;
 	}
 	
+	public String getType() {
+		return type;
+	}
+
+
+	public void setType(String type) {
+		this.type = type;
+	}
+
+
 	public int setAttackLevel(int attack) {
 		return this.attackLevel=attack;
+	}
+
+
+	public String getEquipement() {
+		return equipement;
+	}
+
+
+	public void setEquipement(String equipement) {
+		this.equipement = equipement;
 	}
 
 }

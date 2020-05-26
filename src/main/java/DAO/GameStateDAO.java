@@ -8,8 +8,6 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.mysql.cj.protocol.Resultset;
-
 import game.Game;
 
 public class GameStateDAO extends DAO<Game>{
@@ -24,7 +22,9 @@ public class GameStateDAO extends DAO<Game>{
 		// TODO Auto-generated method stub
 		int id=0;
 		try {
-			PreparedStatement ps =this.connect.prepareStatement("INSERT INTO GameState (`gameId`,`playerName`,`heroId`,`MapId`,`lastLog`,`currentCase`) VALUES (?,?,?,?,?,?)"
+			PreparedStatement ps =this.connect.prepareStatement("INSERT INTO GameState "
+					+ "(`gameId`,`playerName`,`heroId`,`MapId`,`lastLog`,`currentCase`,`heroPa`,`heroPv`)"
+					+ " VALUES (?,?,?,?,?,?,?,?)"
 					,Statement.RETURN_GENERATED_KEYS);
 			ps.setString(1,obj.getGameId());
 			ps.setString(2, obj.getPlayerName());
@@ -32,6 +32,8 @@ public class GameStateDAO extends DAO<Game>{
 			ps.setInt(4, obj.getMapId());
 			ps.setString(5, obj.getLastLog());
 			ps.setInt(6, obj.getCurrentCase());
+			ps.setInt(7, obj.getHeroPa());
+			ps.setInt(8, obj.getHeroPv());
 			ps.executeUpdate();
 			ResultSet rs = ps.getGeneratedKeys();
 			if(rs.next()) {
@@ -62,14 +64,18 @@ public class GameStateDAO extends DAO<Game>{
 	public boolean update(Game obj) {
 		// TODO Auto-generated method stub
 		try {
-			PreparedStatement ps=this.connect.prepareStatement("UPDATE GameState SET `gameId`=?,`playerName`=?,`heroId`=?,`mapId`=?,`lastLog`=?,`currentCase`=?  WHERE `id`=?");
+			PreparedStatement ps=this.connect.prepareStatement("UPDATE GameState "
+					+ "SET `gameId`=?,`playerName`=?,`heroId`=?,`mapId`=?,`lastLog`=?,`currentCase`=?,`heroPa`=?,`heroPv`=?  "
+					+ "WHERE `id`=?");
 			ps.setString(1, obj.getGameId());
 			ps.setString(2, obj.getPlayerName());
 			ps.setInt(3, obj.getHeroId());
 			ps.setInt(4,obj.getMapId());
 			ps.setString(5, obj.getLastLog());
 			ps.setInt(6,obj.getCurrentCase());
-			ps.setInt(7, obj.getId());
+			ps.setInt(7, obj.getHeroPa());
+			ps.setInt(8, obj.getHeroPv());
+			ps.setInt(9, obj.getId());
 			ps.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -93,7 +99,9 @@ public class GameStateDAO extends DAO<Game>{
 						result.getInt("heroId"),
 						result.getInt("MapId"),
 						result.getString("lastLog"),
-						result.getInt("currentCase"));
+						result.getInt("currentCase"),
+						result.getInt("heroPa"),
+						result.getInt("heropv"));
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -107,7 +115,7 @@ public class GameStateDAO extends DAO<Game>{
 		try {
 			ResultSet result= this.connect.createStatement(
 					ResultSet.TYPE_SCROLL_INSENSITIVE,
-					ResultSet.CONCUR_READ_ONLY).executeQuery("SELECT * FROM Hero");
+					ResultSet.CONCUR_READ_ONLY).executeQuery("SELECT * FROM GameState");
 			while(result.next()) 
 				gameList.add( new Game(
 						result.getInt("id"),
@@ -116,7 +124,9 @@ public class GameStateDAO extends DAO<Game>{
 						result.getInt("heroId"),
 						result.getInt("MapId"),
 						result.getString("lastLog"),
-						result.getInt("currentCase")));
+						result.getInt("currentCase"),
+						result.getInt("heroPa"),
+						result.getInt("heropv")));
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

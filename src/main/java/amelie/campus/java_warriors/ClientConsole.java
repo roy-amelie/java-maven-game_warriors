@@ -1,8 +1,13 @@
 package amelie.campus.java_warriors;
 
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
+import DAO.GameStateDAO;
+import DAO.JDBC.ConnectBDD;
+import game.Game;
 import warriors.contracts.GameState;
 import warriors.contracts.GameStatus;
 import warriors.contracts.Hero;
@@ -13,7 +18,8 @@ import warriors.engine.Warriors;
 public class ClientConsole {
 
 	private static String MENU_COMMENCER_PARTIE = "1";
-	private static String MENU_QUITTER = "2";
+	private static String MENU_CHARGER_PARTIE="2";
+	private static String MENU_QUITTER = "3";
 	public static WarriorsAPI warriors;
 	public static void main(String[] args) {
 		
@@ -29,10 +35,21 @@ public class ClientConsole {
 			menuChoice = displayMenu(sc);
 			if(menuChoice.equals(MENU_COMMENCER_PARTIE)) {					
 				startGame(warriors, sc);
+			} else if (menuChoice.equals(MENU_CHARGER_PARTIE)) {
+				donwloadGame(sc);
 			}
 		}while(!menuChoice.equals(MENU_QUITTER));
 		sc.close();
 		System.out.println("� bient�t");
+	}
+
+	private static void donwloadGame(Scanner sc) {
+		List <Game> gameList = new ArrayList<Game>();
+		gameList = new GameStateDAO(ConnectBDD.getInstance()).findAll();
+		for (int i = 0; i <gameList.size(); i++) {
+			System.out.println(String.format("%d - joueur: %s , map: %s, points de vie: %d, niveau d\'attaque: %d ", 
+					gameList.get(i).getId(), gameList.get(i).getPlayerName(),gameList.get(i).getMapId(),gameList.get(i).getHeroPv(),gameList.get(i).getHeroPa()));
+		}
 	}
 
 	private static void startGame(WarriorsAPI warriors, Scanner sc) {
@@ -74,7 +91,8 @@ public class ClientConsole {
 		System.out.println();
 		System.out.println("================== Java Warriors ==================");
 		System.out.println("1 - Commencer une partie");
-		System.out.println("2 - Quitter"); 
+		System.out.println("2 - Charger une partie");
+		System.out.println("3 - Quitter"); 
 		if(sc.hasNext()) {
 			String choice = sc.nextLine();
 			return choice;

@@ -1,11 +1,27 @@
 package warriors.characters;
 
+import cases.Cases;
 import warriors.contracts.Hero;
 
 public class Characters implements Hero{
+	protected int id;
+	protected String type;
+	protected String name;
+	protected String image;
 	protected int life;
 	protected int attackLevel;
-	protected int id;
+	protected String equipement;
+	
+
+	public Characters(int id, String type, String name, String Image, int life, int force, String equipement) {
+		this.id=id;
+		this.type=type;
+		this.name=name;
+		this.image=Image;
+		this.life=life;
+		this.attackLevel=force;
+		this.equipement=equipement;
+	}
 
 	public int getId() {
 		return id;
@@ -18,7 +34,7 @@ public class Characters implements Hero{
 	@Override
 	public String getName() {
 		// TODO Auto-generated method stub
-		return null;
+		return name;
 	}
 
 	@Override
@@ -44,6 +60,10 @@ public class Characters implements Hero{
 	public int getAttackLevel() {
 		// TODO Auto-generated method stub
 		return attackLevel;
+	}
+
+	public String getType() {
+		return type;
 	}
 
 	public void addPvToHero(int addPv) {
