@@ -12,8 +12,9 @@ import warriors.engine.Warriors;
 
 public class Game implements GameState{
 
+	private int id;
 	private String playerName;
-	private String gameId = "game_"+ Warriors.gameList.size() ;
+	private String gameId = "game_"+ id ;
 	private GameStatus gameStatus = GameStatus.IN_PROGRESS;
 	private Characters hero;
 	private Map map;
@@ -23,7 +24,7 @@ public class Game implements GameState{
 	private int heroPv;
 	private int heroPa;
 	private int mapId;
-	private int id;
+	
 
 	public Game(String playerName,Characters hero,Map map) {
 		this.playerName = playerName;
@@ -33,20 +34,19 @@ public class Game implements GameState{
 		this.heroPa=5;
 		this.map = map;
 		this.mapId=1;
-		this.getGameId();
 		this.getGameStatus();
 		this.currentCase=0;
-		this.lastLog="la partie commence";
-		
+		this.lastLog="la partie commence";		
 	}
 	
-	public Game(int id,String gameId,String playerName,int heroId,int MapId, String lastLog, int currentCase,int heroPa,int heroPv) {
+	public Game(int id,String gameId,String playerName,int heroId,Characters characters, int MapId, String lastLog, int currentCase,int heroPa,int heroPv) {
 		this.id=id;
 		this.gameId=gameId;
 		this.playerName = playerName;
+		this.hero=characters;
 		this.heroId=heroId;
 		this.mapId=1;
-		this.currentCase=0;
+		this.currentCase=currentCase;
 		this.lastLog=lastLog;
 		this.heroPa=heroPa;
 		this.heroPv=heroPv;
@@ -58,7 +58,7 @@ public class Game implements GameState{
 		this.heroId=heroId;
 		this.mapId=1;
 		this.gameStatus=GameStatus.IN_PROGRESS;
-		this.currentCase=0;
+		this.currentCase=currentCase;
 		this.lastLog="la partie commence";
 	}
 
@@ -72,6 +72,11 @@ public class Game implements GameState{
 	public String getGameId() {
 		// TODO Auto-generated method stub
 		return gameId;
+	}
+	
+
+	public void setGameId(String gameId) {
+		this.gameId = gameId;
 	}
 
 	public GameStatus setGameStatus(GameStatus status) {

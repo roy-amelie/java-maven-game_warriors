@@ -45,7 +45,10 @@ public class Warriors implements WarriorsAPI {
 			
 		mapList.add(new Board());
 		mapList.add(new JsonMapCreator().createInstance(getClass()));
-		
+		List<Game> gameListTmp=new GameStateDAO(ConnectBDD.getInstance()).findAll();
+		for (int i = 0; i < gameListTmp.size(); i++) {
+			gameList.put(gameListTmp.get(i).getGameId(), gameListTmp.get(i));
+		}
 		dice= new DiceClassic();
 	}
 
@@ -84,7 +87,6 @@ public class Warriors implements WarriorsAPI {
 
 		game.setLastLog(action);
 		boolean saveResult= new GameStateDAO(ConnectBDD.getInstance()).update(game);
-		System.out.println(saveResult);
 		return game;
 	}
 

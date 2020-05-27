@@ -38,9 +38,36 @@ public class HeroDAO extends DAO<Characters>{
 	}
 
 	@Override
-	public Characters find(int id) {
-		// TODO Auto-generated method stub
-		return null;
+	public Characters findById(int id) {
+		Characters hero =null;
+		try {
+			ResultSet result= this.connect.createStatement(
+					ResultSet.TYPE_SCROLL_INSENSITIVE,
+					ResultSet.CONCUR_READ_ONLY).executeQuery("SELECT * FROM Hero");
+			if(result.first()) 
+				if(result.getString("name").equals("warrior")) {
+					hero = new Warrior(
+							result.getInt("id"),
+							result.getString("type"),
+							result.getString("name"),
+							result.getString("Image"),
+							result.getInt("life"),
+							result.getInt("force"),
+							result.getString("equipement"));
+				} else if (result.getString("name").equals("wizard")) {
+					hero=  new Wizard(
+							result.getInt("id"),
+							result.getString("type"),
+							result.getString("name"),
+							result.getString("Image"),
+							result.getInt("life"),
+							result.getInt("force"),
+							result.getString("equipement"));
+				}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return hero;
 	}
 
 	@Override

@@ -36,7 +36,7 @@ public abstract class DAO <T>{
 	  * @param id
 	  * @return T
 	  */
-	  public abstract T find(int id);
+	  public abstract T findById(int id);
 	  
 	  public abstract List<T> findAll();
 }

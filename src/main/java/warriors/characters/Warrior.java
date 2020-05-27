@@ -3,22 +3,10 @@ package warriors.characters;
 
 public class Warrior extends Characters {
 
-	private String name= "Guerrier";
-	private String image= "https://i.pinimg.com/originals/29/f0/31/29f031dcc97eb956bdab6884e49263d2.jpg" ;
-	private int life= 10;
-	private int attackLevel=5;
-	private int id;
-	private String type="warrior";
-	private String equipement="";
-	
 	
 	public Warrior(int id, String type, String name, String Image, int life, int force, String equipement) {
 		super(id, type, name, Image, life, force, equipement);
 	}
-
-
-	
-
 
 	public int getId() {
 		return id;

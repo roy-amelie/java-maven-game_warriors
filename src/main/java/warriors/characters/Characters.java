@@ -1,6 +1,5 @@
 package warriors.characters;
 
-import cases.Cases;
 import warriors.contracts.Hero;
 
 public class Characters implements Hero{

@@ -6,8 +6,10 @@ import java.util.List;
 import java.util.Scanner;
 
 import DAO.GameStateDAO;
+import DAO.HeroDAO;
 import DAO.JDBC.ConnectBDD;
 import game.Game;
+import warriors.characters.Characters;
 import warriors.contracts.GameState;
 import warriors.contracts.GameStatus;
 import warriors.contracts.Hero;
@@ -36,19 +38,37 @@ public class ClientConsole {
 			if(menuChoice.equals(MENU_COMMENCER_PARTIE)) {					
 				startGame(warriors, sc);
 			} else if (menuChoice.equals(MENU_CHARGER_PARTIE)) {
-				donwloadGame(sc);
+				loadGame(sc);
 			}
 		}while(!menuChoice.equals(MENU_QUITTER));
 		sc.close();
 		System.out.println("� bient�t");
 	}
 
-	private static void donwloadGame(Scanner sc) {
+	private static void loadGame(Scanner sc) {
+		GameStateDAO gameStateDao = new GameStateDAO(ConnectBDD.getInstance());
 		List <Game> gameList = new ArrayList<Game>();
-		gameList = new GameStateDAO(ConnectBDD.getInstance()).findAll();
+		gameList = gameStateDao.findAll();
 		for (int i = 0; i <gameList.size(); i++) {
 			System.out.println(String.format("%d - joueur: %s , map: %s, points de vie: %d, niveau d\'attaque: %d ", 
-					gameList.get(i).getId(), gameList.get(i).getPlayerName(),gameList.get(i).getMapId(),gameList.get(i).getHeroPv(),gameList.get(i).getHeroPa()));
+					i, gameList.get(i).getPlayerName(),gameList.get(i).getMapId(),gameList.get(i).getHeroPv(),gameList.get(i).getHeroPa()));
+		}
+		int id=gameList.get(Integer.parseInt(sc.nextLine())).getId();
+		GameState gameState= gameStateDao.findById(id);
+		HeroDAO heroDao=new HeroDAO(ConnectBDD.getInstance());
+		Characters hero = heroDao.findById(id);
+		hero.setAttackLevel(((Game) gameState).getHeroPa());
+		hero.setLife(((Game) gameState).getHeroPv());
+		
+		String gameId= gameState.getGameId();
+		
+		while (gameState.getGameStatus() == GameStatus.IN_PROGRESS) {
+			System.out.println(gameState.getLastLog());
+			System.out.println("\nAppuyer sur une touche pour lancer le d�"); 
+			if(sc.hasNext()) {
+				sc.nextLine();
+				gameState = warriors.nextTurn(gameId);
+			}							
 		}
 	}
 
